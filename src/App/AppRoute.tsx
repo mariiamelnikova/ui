@@ -24,8 +24,13 @@ export const history = createBrowserHistory({
 });
 
 /* eslint react/jsx-max-depth: 0 */
-const AppRoute: React.FC = ({ children }) => {
+const AppRoute: React.FC = () => {
   const appContext = useContext(AppContext);
+
+  if (!appContext) {
+    throw Error('The app Context was not correct used');
+  }
+
   const { user, packages } = appContext;
 
   const isUserLoggedIn = user && user.username;
@@ -33,7 +38,6 @@ const AppRoute: React.FC = ({ children }) => {
   return (
     <Router history={history}>
       <Suspense fallback={<Loading />}>
-        {children}
         <Switch>
           <ReactRouterDomRoute exact={true} path={Route.ROOT}>
             <HomePage isUserLoggedIn={!!isUserLoggedIn} packages={packages || []} />

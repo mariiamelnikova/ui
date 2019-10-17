@@ -8,10 +8,6 @@ interface Props {
   packages: PackageInterface[];
 }
 
-const Home: React.FC<Props> = ({ packages }) => (
-  <div className="container content">
-    <PackageList packages={packages} />
-  </div>
-);
+const Home: React.FC<Props> = ({ packages }) => <PackageList packages={packages} />;
 
 export default Home;
