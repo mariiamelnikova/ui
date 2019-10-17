@@ -4,11 +4,8 @@ import { FormError } from '../components/Login/Login';
 
 export interface AppProps {
   error?: FormError;
-  // logoUrl: string;
   user?: User;
   scope: string;
-  // showLoginModal: boolean;
-  //   isUserLoggedIn: boolean;
   packages: any[];
 }
 
@@ -16,11 +13,11 @@ export interface User {
   username: string;
 }
 
-export interface AppContextProps {
-  state: AppProps;
-  setUser: (user: User) => void;
+export interface AppContextProps extends AppProps {
+  setUser: (user?: User) => void;
+  setError: (error?: FormError) => void;
 }
 
-const AppContext = createContext<Partial<AppProps>>({});
+const AppContext = createContext<undefined | AppContextProps>(undefined);
 
 export default AppContext;
