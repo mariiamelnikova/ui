@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/styles';
 import React from 'react';
 
+import { fontSize, fontWeight } from '../utils/styles/sizes';
+import colors from '../utils/styles/colors';
+
 // reset styles based on https://gist.github.com/DavidWells/18e73022e723037a50d6
 const resetStyles = makeStyles(() => ({
   '@global': {
@@ -23,10 +26,14 @@ const resetStyles = makeStyles(() => ({
     },
     html: {
       boxSizing: 'border-box',
-      fontFamily: "'Roboto', Times",
     },
     body: {
       lineHeight: 1,
+      fontSize: fontSize.base,
+      color: colors.eclipse,
+      fontFamily:
+        // eslint-disable-next-line max-len
+        '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
     },
     'ol, ul': {
       listStyle: 'none',
@@ -43,6 +50,9 @@ const resetStyles = makeStyles(() => ({
     },
     a: {
       textDecoration: 'none',
+    },
+    strong: {
+      fontWeight: fontWeight.semiBold,
     },
     '#root': {
       height: '100%',
