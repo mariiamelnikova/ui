@@ -4,7 +4,7 @@ import React, { Component, ReactElement } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
-import { AppContextConsumer } from './App/App';
+import AppContext from './App/AppContext';
 import Header from './components/Header';
 
 const history = createBrowserHistory({
@@ -21,12 +21,13 @@ interface RouterAppProps {
   onToggleLoginModal: () => void;
 }
 
+/* eslint-disable react/destructuring-assignment */
 class RouterApp extends Component<RouterAppProps> {
   public render(): ReactElement<HTMLDivElement> {
     return (
       <Router history={history}>
         <React.Suspense fallback={null}>
-          {this.renderHeader()}
+          {this.props.children}
           <Switch>
             <Route exact={true} path={'/'} render={this.renderHomePage} />
             <Route exact={true} path={'/-/web/detail/@:scope/:package'} render={this.renderVersionPage} />
@@ -40,25 +41,13 @@ class RouterApp extends Component<RouterAppProps> {
     );
   }
 
-  public renderHeader = (): ReactElement<HTMLDivElement> => {
-    const { onLogout, onToggleLoginModal } = this.props;
-
-    return (
-      <AppContextConsumer>
-        {function renderConsumerVersionPage({ logoUrl, scope = '', user }) {
-          return <Header logo={logoUrl} onLogout={onLogout} onToggleLoginModal={onToggleLoginModal} scope={scope} username={user && user.username} />;
-        }}
-      </AppContextConsumer>
-    );
-  };
-
   public renderHomePage = (): ReactElement<HTMLDivElement> => {
     return (
-      <AppContextConsumer>
+      <AppContext.Consumer>
         {function renderConsumerVersionPage({ isUserLoggedIn, packages }) {
-          return <HomePage isUserLoggedIn={isUserLoggedIn} packages={packages} />;
+          return <span>home</span>;
         }}
-      </AppContextConsumer>
+      </AppContext.Consumer>
     );
   };
 

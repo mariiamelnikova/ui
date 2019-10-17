@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import Search from '../Search';
 import { getRegistryURL } from '../../utils/url';
 import Button from '../../muiComponents/Button';
+import AppContext from '../../App/AppContext';
 
 import { NavBar, InnerNavBar, MobileNavBar, InnerMobileNavBar } from './styles';
 import HeaderLeft from './HeaderLeft';
@@ -10,17 +11,21 @@ import HeaderRight from './HeaderRight';
 import HeaderInfoDialog from './HeaderInfoDialog';
 
 interface Props {
-  logo?: string;
-  username?: string;
-  onLogout: () => void;
-  onToggleLoginModal: () => void;
-  scope: string;
+  // logo?: string;
+  // username?: string;
+  // onLogout: () => void;
+  // onToggleLoginModal: () => void;
+  // scope: string;
   withoutSearch?: boolean;
 }
 
 /* eslint-disable react/jsx-max-depth */
 /* eslint-disable react/jsx-no-bind*/
-const Header: React.FC<Props> = ({ logo, withoutSearch, username, onLogout, onToggleLoginModal, scope }) => {
+const Header: React.FC<Props> = ({ withoutSearch }) => {
+  const appContext = useContext(AppContext);
+
+  const { user, scope } = appContext;
+  const logo = window.VERDACCIO_LOGO;
   const [isInfoDialogOpen, setOpenInfoDialog] = useState();
   const [showMobileNavBar, setShowMobileNavBar] = useState();
 
@@ -30,15 +35,15 @@ const Header: React.FC<Props> = ({ logo, withoutSearch, username, onLogout, onTo
         <InnerNavBar>
           <HeaderLeft logo={logo} />
           <HeaderRight
-            onLogout={onLogout}
+            onLogout={() => console.log('logout')}
             onOpenRegistryInfoDialog={() => setOpenInfoDialog(true)}
-            onToggleLogin={onToggleLoginModal}
+            onToggleLogin={() => console.log('login modal')}
             onToggleMobileNav={() => setShowMobileNavBar(!showMobileNavBar)}
-            username={username}
+            username={user && user.username}
             withoutSearch={withoutSearch}
           />
         </InnerNavBar>
-        <HeaderInfoDialog isOpen={isInfoDialogOpen} onCloseDialog={() => setOpenInfoDialog(false)} registryUrl={getRegistryURL()} scope={scope} />
+        {scope && <HeaderInfoDialog isOpen={isInfoDialogOpen} onCloseDialog={() => setOpenInfoDialog(false)} registryUrl={getRegistryURL()} scope={scope} />}
       </NavBar>
       {showMobileNavBar && !withoutSearch && (
         <MobileNavBar>

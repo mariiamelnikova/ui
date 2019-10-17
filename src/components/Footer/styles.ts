@@ -5,13 +5,12 @@ import Icon from '../Icon/Icon';
 import colors from '../../utils/styles/colors';
 
 export const Wrapper = styled('div')({
-  '&&': {
-    background: colors.snow,
-    borderTop: `1px solid ${colors.greyGainsboro}`,
-    color: colors.nobel01,
-    fontSize: '14px',
-    padding: '20px',
-  },
+  background: colors.snow,
+  borderTop: `1px solid ${colors.greyGainsboro}`,
+  color: colors.nobel01,
+  fontSize: '14px',
+  padding: '20px',
+  width: '100%',
 });
 
 export const Inner = styled('div')`
